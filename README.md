@@ -64,3 +64,7 @@ X（旧Twitter）などのSNSで「#図書館」などのハッシュタグを�
 
 ### 画面遷移図
 Figma：https://www.figma.com/design/8sLRrEYv4OhuvmiFCmLamW/ndc-quiz?node-id=0-1&t=F5FpR7h7EuIlqzVs-1
+
+### ER図
+https://drive.google.com/file/d/1W_OLIMxQaCWgCCvWW-G-daKNdrdvDAY-/view?usp=sharing
+
