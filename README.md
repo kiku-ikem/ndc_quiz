@@ -61,3 +61,6 @@ X（旧Twitter）などのSNSで「#図書館」などのハッシュタグを�
 ## 将来的なアプリの拡張など、検討している事項
 - どれくらいの問題に正解したかを表示するなど、ログイン後に利用できる機能の充実を検討中です。
 - 投入した図書についての情報をトップページなどに表示するニュース機能を検討中です。
+
+### 画面遷移図
+Figma：https://www.figma.com/design/8sLRrEYv4OhuvmiFCmLamW/ndc-quiz?node-id=0-1&t=F5FpR7h7EuIlqzVs-1
