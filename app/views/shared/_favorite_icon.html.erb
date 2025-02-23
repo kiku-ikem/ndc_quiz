@@ -1,0 +1,8 @@
+<% if current_user %>
+  <% if current_user.favorite_books.exists?(id: book.id) %>
+    <% favorite = current_user.favorites.find_by(book_id: book.id) %>
+    <%= link_to "★", favorite_path(favorite), data: { turbo_method: :delete }, remote: true, id: "favorite-#{book.id}" %>
+  <% else %>
+    <%= link_to "☆", favorites_path(book_id: book.id), data: { turbo_method: :post }, remote: true, id: "favorite-#{book.id}" %>
+  <% end %>
+<% end %>

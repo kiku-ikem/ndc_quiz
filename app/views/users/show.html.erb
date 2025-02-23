@@ -1,4 +1,25 @@
-<div>
-  <h1 class="font-bold text-4xl">Users#show</h1>
-  <p>Find me in app/views/users/show.html.erb</p>
-</div>
+<h2>マイページ</h2>
+<p>こんにちは、<%= current_user.name %>さん</p>
+
+<h3>お気に入りの図書一覧</h3>
+<% if current_user.favorite_books.any? %>
+  <div class="favorite-books">
+    <% current_user.favorite_books.each_with_index do |book, index| %>
+      <div class="result-book">
+        <h3>図書 <%= index + 1 %></h3>
+        <p>タイトル: <%= book.title %></p>
+        <p>著者: <%= book.author %></p>
+        <p>
+          詳細情報:
+          <%= link_to "NDL書誌情報", "http://id.ndl.go.jp/jpno/#{book.jp_no}", target: "_blank" %>
+        </p>
+        <%# ログイン状態の場合、お気に入りアイコンを表示（お気に入り登録/解除のリンク） %>
+        <%= render 'shared/favorite_icon', book: book %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>お気に入りに登録された図書はありません。</p>
+<% end %>
+
+<%= link_to "トップに戻る", root_path, class: "btn btn-secondary" %>

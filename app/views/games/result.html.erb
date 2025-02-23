@@ -1,4 +1,27 @@
-<div>
-  <h1 class="font-bold text-4xl">Games#result</h1>
-  <p>Find me in app/views/games/result.html.erb</p>
-</div>
+<h2>ゲーム結果</h2>
+<p>全5問中、あなたの正解数は <%= @correct_count %> 問です。</p>
+<p>全5問の結果は以下の通りです。</p>
+
+<% unless current_user %>
+  <div class="alert alert-info">
+    <p>アカウント登録またはログインすると、解答した図書のお気に入り登録などができるようになります。</p>
+    <%= link_to "新規登録", signup_path(from: 'result'), class: "btn btn-primary" %>
+    <%= link_to "ログイン", login_path(from: 'result'), class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<% @books.each_with_index do |book, index| %>
+  <div class="result-book">
+    <h3>問題 <%= index + 1 %></h3>
+    <p>タイトル: <%= book.title %></p>
+    <p>著者: <%= book.author %></p>
+    <p>
+      詳細情報: 
+      <%= link_to "http://id.ndl.go.jp/jpno/#{book.jp_no}", "http://id.ndl.go.jp/jpno/#{book.jp_no}", target: "_blank" %>
+    </p>
+    <%# ログイン状態の場合、お気に入りアイコンを表示 %>
+    <%= render 'shared/favorite_icon', book: book %>
+  </div>
+<% end %>
+
+<%= link_to "トップに戻る", root_path, class: "btn btn-secondary" %>

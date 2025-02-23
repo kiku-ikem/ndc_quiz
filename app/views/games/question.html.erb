@@ -1,4 +1,48 @@
-<div>
-  <h1 class="font-bold text-4xl">Games#question</h1>
-  <p>Find me in app/views/games/question.html.erb</p>
+<% ndc_categories = {
+  0 => "総記",
+  1 => "哲学",
+  2 => "歴史",
+  3 => "社会科学",
+  4 => "自然科学",
+  5 => "技術",
+  6 => "産業",
+  7 => "芸術",
+  8 => "言語",
+  9 => "文学"
+} %>
+
+<div style="max-width: 800px; margin: 0 auto; text-align: center; padding: 20px;">
+  <h2>問題 <%= @question_number %> / 5</h2>
+  <p>以下の図書に関する情報をもとに、NDCの１桁目を予想してください。</p>
+
+  <div style="margin-bottom: 20px;">
+    <p><strong>タイトル:</strong> <%= @book.title %></p>
+    <p><strong>著者:</strong> <%= @book.author %></p>
+  </div>
+
+  <h3>回答を選択してください</h3>
+  <%= form_with url: answer_games_path, method: :post, local: true, data: { turbo: false } do |form| %>
+    <% chunked_digits = (0..9).each_slice(5).to_a %>
+    
+    <!-- 2列に並べるためにflexboxを使う -->
+    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+      <% chunked_digits.each do |digits| %>
+        <div>
+          <% digits.each do |digit| %>
+            <div style="margin-bottom: 10px;">
+              <%= form.radio_button :answer, digit, id: "answer_#{digit}" %>
+              <%= form.label "answer_#{digit}", "#{digit} #{ndc_categories[digit]}" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= form.hidden_field :book_id, value: @book.id %>
+    <%= form.hidden_field :question_number, value: @question_number %>
+
+    <div style="margin-top: 20px;">
+      <%= form.submit "回答する" %>
+    </div>
+  <% end %>
 </div>
