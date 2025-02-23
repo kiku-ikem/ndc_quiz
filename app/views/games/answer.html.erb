@@ -1,17 +1,108 @@
-<% if @user_answer.to_s == @book.ndc1.to_s %>
-  <p style="color: green;">正解です！</p>
-<% else %>
-  <p style="color: red;">不正解です。正しい答えは <%= @book.ndc1 %> です。</p>
-<% end %>
+<% ndc_categories = {
+  0 => "総記",
+  1 => "哲学",
+  2 => "歴史",
+  3 => "社会科学",
+  4 => "自然科学",
+  5 => "技術",
+  6 => "産業",
+  7 => "芸術",
+  8 => "言語",
+  9 => "文学"
+} %>
 
-<p>あなたの回答: <%= @user_answer %></p>
-<p>図書の詳細</p>
-<p>NDC <%= @book.ndc %></p>
-<p><%= @book.title %>（著者: <%= @book.author %>）</p>
+<div class="max-w-2xl mx-auto text-center space-y-4 mt-6">
+  <%# 正解の番号とユーザーの回答を整数化 %>
+  <% correct_num = @book.ndc1.to_i %>
+  <% user_num    = @user_answer.to_i %>
+
+  <%# 正解ラベル例: "0 総記" %>
+  <% correct_label = "#{correct_num} #{ndc_categories[correct_num]}" if ndc_categories.key?(correct_num) %>
+  <%# ユーザー回答ラベル例: "9 文学" %>
+  <% user_label = "#{user_num} #{ndc_categories[user_num]}" if ndc_categories.key?(user_num) %>
+
+  <% if @user_answer.to_s == @book.ndc1.to_s %>
+    <p class="text-green-600 text-xl font-bold">正解です！</p>
+  <% else %>
+    <p class="text-red-600 text-xl font-bold">
+      不正解です。正しい答えは <%= correct_label || @book.ndc1 %> です。
+    </p>
+  <% end %>
+
+  <p>あなたの回答: <%= user_label || @user_answer %></p>
+
+  <h3 class="font-semibold">書誌情報</h3>
+  <p class="text-red-600 text-xl font-bold">NDC <%= @book.ndc %></p>
+
+  <pre class="whitespace-pre-wrap font-sans text-base font-semibold leading-relaxed">
+    <%= formatted_book_info(@book) %>
+  </pre>
+
+  <p>
+    詳細情報:
+    <%= link_to "http://id.ndl.go.jp/jpno/#{@book.jp_no}", 
+                "http://id.ndl.go.jp/jpno/#{@book.jp_no}",
+                target: "_blank",
+                class: "text-blue-600 underline" %>
+  </p>
+
+  <% if session[:question_number] > 5 %>
+    <%= link_to "結果画面", result_games_path, 
+                class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded inline-block" %>
+  <% else %>
+    <%= link_to "次の問題へ", question_games_path, 
+                class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded inline-block" %>
+  <% end %>
+</div>
 
 
-<% if session[:question_number] > 5 %>
-  <%= link_to "結果画面", result_games_path, class: "btn btn-primary" %>
-<% else %>
-  <%= link_to "次の問題へ", question_games_path, class: "btn btn-primary" %>
-<% end %>
+
+◆vi app/views/games/question.html.erb
+<% ndc_categories = {
+  0 => "総記",
+  1 => "哲学",
+  2 => "歴史",
+  3 => "社会科学",
+  4 => "自然科学",
+  5 => "技術",
+  6 => "産業",
+  7 => "芸術",
+  8 => "言語",
+  9 => "文学"
+} %>
+
+<div class="max-w-2xl mx-auto text-center space-y-6 mt-6">
+  <h2 class="text-2xl font-bold">問題 <%= @question_number %> / 5</h2>
+  <p>次の図書に関する情報をもとに、NDCの１桁目を予想してください。</p>
+
+  <div>
+    <pre class="whitespace-pre-wrap font-sans text-base font-semibold leading-relaxed">
+      <%= formatted_book_info(@book) %>
+    </pre>
+  </div>
+
+  <h3 class="text-xl font-semibold">回答を選択してください</h3>
+  <%= form_with url: answer_games_path, method: :post, local: true, data: { turbo: false } do |form| %>
+    <% chunked_digits = (0..9).each_slice(5).to_a %>
+
+    <div class="flex justify-center gap-8 mb-4">
+      <% chunked_digits.each do |digits| %>
+        <div class="flex flex-col items-center">
+          <% digits.each do |digit| %>
+            <div class="mb-2">
+              <%= form.radio_button :answer, digit, id: "answer_#{digit}" %>
+              <%= form.label "answer_#{digit}", "#{digit} #{ndc_categories[digit]}" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= form.hidden_field :book_id, value: @book.id %>
+    <%= form.hidden_field :question_number, value: @question_number %>
+
+    <div>
+      <%= form.submit "回答する", class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded" %>
+    </div>
+  <% end %>
+</div>

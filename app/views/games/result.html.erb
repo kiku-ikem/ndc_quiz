@@ -1,27 +1,52 @@
-<h2>ゲーム結果</h2>
-<p>全5問中、あなたの正解数は <%= @correct_count %> 問です。</p>
-<p>全5問の結果は以下の通りです。</p>
+<div class="max-w-2xl mx-auto mt-6 space-y-4 text-gray-800">
+  <h2 class="text-2xl font-bold">ゲーム結果</h2>
+  <p>全5問中、あなたの正解数は <%= @correct_count %> 問です。</p>
+  <p>出題図書の詳細</p>
+  <% if current_user %>
+  <p class="text-sm text-gray-500">☆をクリックするとお気に入り登録できます！</p>
+  <% end %>
 
-<% unless current_user %>
-  <div class="alert alert-info">
-    <p>アカウント登録またはログインすると、解答した図書のお気に入り登録などができるようになります。</p>
-    <%= link_to "新規登録", signup_path(from: 'result'), class: "btn btn-primary" %>
-    <%= link_to "ログイン", login_path(from: 'result'), class: "btn btn-secondary" %>
+  <% unless current_user %>
+    <div class="bg-blue-50 p-4 border border-blue-200 rounded space-y-2">
+      <p>アカウント登録またはログインすると、解答した図書のお気に入り登録などができるようになります。</p>
+      <div class="flex gap-4">
+        <%= link_to "新規登録", signup_path(from: 'result'), class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded" %>
+        <%= link_to "ログイン", login_path(from: 'result'), class: "bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded" %>
+      </div>
+    </div>
+  <% end %>
+
+  <% @books.each_with_index do |book, index| %>
+    <div class="border-b border-gray-300 pb-4">
+      <!-- 1行目: 問題番号 + NDC + お気に入りアイコン -->
+      <div class="flex items-center space-x-2 mb-2">
+        <h3 class="font-semibold text-base">
+          問題 <%= index + 1 %>　NDC <%= book.ndc %>
+        </h3>
+        <% if current_user %>
+          <div class="text-2xl">
+            <%= render 'shared/favorite_icon', book: book %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- 書誌情報 (改行は保持, 連続空白はまとめる) -->
+      <pre class="whitespace-pre-line text-left font-sans text-base leading-relaxed mb-2">
+        <%= formatted_book_info(book).strip %>
+      </pre>
+
+      <!-- 詳細情報リンク -->
+      <p class="text-sm">
+        詳細情報:
+        <%= link_to "http://id.ndl.go.jp/jpno/#{book.jp_no}",
+                    "http://id.ndl.go.jp/jpno/#{book.jp_no}",
+                    target: "_blank",
+                    class: "text-blue-600 underline" %>
+      </p>
+    </div>
+  <% end %>
+
+  <div>
+    <%= link_to "トップに戻る", root_path, class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded inline-block" %>
   </div>
-<% end %>
-
-<% @books.each_with_index do |book, index| %>
-  <div class="result-book">
-    <h3>問題 <%= index + 1 %></h3>
-    <p>タイトル: <%= book.title %></p>
-    <p>著者: <%= book.author %></p>
-    <p>
-      詳細情報: 
-      <%= link_to "http://id.ndl.go.jp/jpno/#{book.jp_no}", "http://id.ndl.go.jp/jpno/#{book.jp_no}", target: "_blank" %>
-    </p>
-    <%# ログイン状態の場合、お気に入りアイコンを表示 %>
-    <%= render 'shared/favorite_icon', book: book %>
-  </div>
-<% end %>
-
-<%= link_to "トップに戻る", root_path, class: "btn btn-secondary" %>
+</div>

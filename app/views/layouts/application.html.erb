@@ -1,28 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <title>NDC Game App</title>
+  <title>NDCクイズ</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <!-- Tailwind CSS の読み込み -->
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
 </head>
-<body>
+<body class="min-h-screen flex flex-col bg-white text-gray-800">
+  <!-- 上部ヘッダー -->
   <% if controller.controller_name == "games" %>
     <%= render 'shared/game_header' %>
   <% else %>
     <%= render 'shared/header' %>
   <% end %>
-  
+
+  <!-- フラッシュメッセージ（あれば） -->
   <% flash.each do |key, message| %>
-    <div class="alert alert-<%= bootstrap_class_for(key) %>">
-      <%= message %>
+    <!-- 例: alert=danger, notice=successなどを想定 -->
+    <div class="mx-auto mt-4 w-full max-w-4xl px-4">
+      <div class="p-4 mb-4 text-white <%= key == 'alert' ? 'bg-red-500' : 'bg-green-500' %>">
+        <%= message %>
+      </div>
     </div>
   <% end %>
-  
-  <div class="container">
+
+  <!-- メインコンテンツ -->
+  <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-6">
     <%= yield %>
-  </div>
+  </main>
+
+  <!-- フッター -->
   <%= render 'shared/footer' %>
 </body>
 </html>

@@ -1,3 +1,13 @@
-<footer>
-  <p>&copy; <%= Time.current.year %> NDC Quiz All rights reserved.</p>
+<footer class="bg-[#6b3f00] text-white mt-4">
+  <div class="max-w-4xl mx-auto flex flex-col items-center text-sm px-4 py-3 space-y-2">
+    <nav class="space-x-4">
+      <%= link_to "このサイトについて", about_path %>
+      <%= link_to "プライバシーポリシー", privacy_path %>
+      <%= link_to "利用規約", terms_path %>
+      <%= link_to "お問い合わせ", "https://x.com/kiku_runteq59a", target: "_blank" %>
+    </nav>
+    <p class="text-center">
+      &copy; <%= Time.current.year %> NDC Quiz All rights reserved.
+    </p>
+  </div>
 </footer>
