@@ -65,7 +65,7 @@ class GamesController < ApplicationController
   end
 
   def result
-    @books = Book.where(id: session[:book_ids])
+    @books = session[:book_ids].map { |id| Book.find(id) }
     @correct_count = session[:correct_count] || 0
   end
 end
