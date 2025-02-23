@@ -1,0 +1,61 @@
+<div class="max-w-2xl mx-auto mt-8 space-y-6 text-gray-800 leading-relaxed px-4">
+  <h2 class="text-2xl font-bold">このサイトについて</h2>
+
+  <div>
+  <h3 class="text-xl font-semibold">サイトの趣旨</h3>
+  <p>
+    このサイトは、日本十進分類法（NDC）を用いた図書分類ゲームを提供しています。ランダムに出題される図書のNDCの1桁目（類）を当てることで、楽しみながら図書館の分類システムを学ぶことができます。
+  </p>
+  <p>
+    NDCは多くの図書館で採用されている分類方法で、これを理解することで、図書館内で効率的なブラウジングが可能になり、興味のある分野の図書と出会う機会が増えます。本サイトは、そうした図書館との豊かな関わりを促すことを目的としています。
+  </p>
+  <p>
+  なお、出題する図書の情報は、国立国会図書館のデータを利用しています。<BR>
+  </p>
+  <p>
+  出典：<%= link_to "国立国会図書館サーチ","https://ndlsearch.ndl.go.jp", target: "_blank", class: "text-blue-600 underline" %>
+（データは、2025/01/19-2025-02/22に取得）
+  </p>
+  <p>※各図書館・図書室により分類番号の付与の仕方が異なる場合がありますが、ご了承ください。</p>
+  </div>
+
+  <div>
+  <h3 class="text-xl font-semibold">本サービスの背景</h3>
+  <p>
+    このサイトは、プログラミングスクールRUNTEQの卒業制作として開発されました。開発者自身が司書資格を取得する過程で、NDCの知識が図書館利用をより充実したものにすることを実感し、その体験を広めたいという思いから、本サービスの企画に至りました。
+  </p>
+  <p>
+    特に、図書館を利用する機会はあるものの、分類の仕組みを知らないライトユーザーに向けて、ゲームを通じてNDCを楽しく学び、図書館をより身近に感じてもらうことを目指しています。
+  </p>
+  </div>
+
+  <div>
+  <h3 class="text-xl font-semibold">運営に関するご案内</h3>
+  <p>
+    本サービスは卒業制作として開発されたものであり、<br>
+    ・サービスの継続的な提供は未定です。<br>
+    ・ドメインが変更される可能性があります。<br>
+  </p>
+  <p>
+    そのため、将来的にURLが変更されたり、サービスの提供が終了する場合がありますので、あらかじめご了承ください。
+  </p>
+  </div>
+
+  <div>
+  <h3 class="text-xl font-semibold">お問い合わせ</h3>
+  <p>
+    サービスに関するお問い合わせは、開発者の連絡先までお願いいたします。<br>
+       <%= link_to "https://x.com/kiku_runteq59a","https://x.com/kiku_runteq59a", target: "_blank", class: "text-blue-600 underline" %>
+  </p>
+  </div>
+  <div>
+  <p>
+    本サービスを通じて、より多くの方が図書館の魅力を再発見し、楽しく学ぶきっかけとなれば幸いです。
+  </p>
+  </div>
+
+  <!-- 必要ならトップページへのリンクなどを追加 -->
+  <div class="text-center mt-6">
+    <%= link_to "トップに戻る", root_path, class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded inline-block" %>
+  </div>
+</div>
