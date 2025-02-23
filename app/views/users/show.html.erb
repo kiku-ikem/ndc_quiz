@@ -1,25 +1,40 @@
-<h2>マイページ</h2>
-<p>こんにちは、<%= current_user.name %>さん</p>
+<h2 class="text-2xl font-semibold text-center">お気に入り一覧</h2>
+  <% if current_user.favorite_books.any? %>
+    <p class="text-sm text-center text-gray-500">
+      ★をクリックするとお気に入りを解除できます！
+    </p>
+    <div class="space-y-4">
+      <% current_user.favorite_books.each_with_index do |book, index| %>
+        <div class="border-b border-gray-300 pb-4">
+          <div class="flex items-center space-x-2 mb-2">
+            <h4 class="font-semibold text-base">
+              NDC <%= book.ndc %>
+            </h4>
+            <div class="text-2xl">
+              <%= render 'shared/favorite_icon', book: book %>
+            </div>
+          </div>
 
-<h3>お気に入りの図書一覧</h3>
-<% if current_user.favorite_books.any? %>
-  <div class="favorite-books">
-    <% current_user.favorite_books.each_with_index do |book, index| %>
-      <div class="result-book">
-        <h3>図書 <%= index + 1 %></h3>
-        <p>タイトル: <%= book.title %></p>
-        <p>著者: <%= book.author %></p>
-        <p>
-          詳細情報:
-          <%= link_to "NDL書誌情報", "http://id.ndl.go.jp/jpno/#{book.jp_no}", target: "_blank" %>
-        </p>
-        <%# ログイン状態の場合、お気に入りアイコンを表示（お気に入り登録/解除のリンク） %>
-        <%= render 'shared/favorite_icon', book: book %>
-      </div>
-    <% end %>
+          <!-- 書誌情報 (whitespace-pre-line + strip) -->
+          <pre class="whitespace-pre-line text-left font-sans text-base leading-relaxed mb-2">
+            <%= formatted_book_info(book).strip %>
+          </pre>
+
+          <p class="text-sm">
+            詳細情報:
+            <%= link_to "http://id.ndl.go.jp/jpno/#{book.jp_no}",
+                        "http://id.ndl.go.jp/jpno/#{book.jp_no}",
+                        target: "_blank",
+                        class: "text-blue-600 underline" %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-center">お気に入りに登録された図書はありません。</p>
+  <% end %>
+
+  <div class="text-center mt-4">
+    <%= link_to "トップに戻る", root_path, class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded inline-block" %>
   </div>
-<% else %>
-  <p>お気に入りに登録された図書はありません。</p>
-<% end %>
-
-<%= link_to "トップに戻る", root_path, class: "btn btn-secondary" %>
+</div>
