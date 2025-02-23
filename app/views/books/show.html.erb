@@ -1,4 +1,9 @@
-<div>
-  <h1 class="font-bold text-4xl">Books#show</h1>
-  <p>Find me in app/views/books/show.html.erb</p>
-</div>
+<h2><%= @book.title %></h2>
+<p><strong>著者:</strong> <%= @book.author %></p>
+<p><strong>出版社:</strong> <%= @book.publisher %></p>
+<p><strong>出版年:</strong> <%= @book.publication_year %></p>
+<p><strong>ISBN:</strong> <%= @book.isbn %></p>
+<p><strong>概要:</strong></p>
+<p><%= @book.description %></p>
+<%# ログイン状態の場合にお気に入りアイコンを表示 %>
+<%= render 'shared/favorite_icon', book: @book %>

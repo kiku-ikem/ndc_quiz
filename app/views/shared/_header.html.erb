@@ -1,0 +1,11 @@
+<header>
+  <nav>
+    <% if current_user %>
+      <%= link_to "マイページ", mypage_path %> |
+      <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete } %>
+    <% else %>
+      <%= link_to "ログイン", login_path %> |
+      <%= link_to "サインアップ", signup_path %>
+    <% end %>
+  </nav>
+</header>

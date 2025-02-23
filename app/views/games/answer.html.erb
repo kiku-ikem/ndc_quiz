@@ -1,4 +1,17 @@
-<div>
-  <h1 class="font-bold text-4xl">Games#answer</h1>
-  <p>Find me in app/views/games/answer.html.erb</p>
-</div>
+<% if @user_answer.to_s == @book.ndc1.to_s %>
+  <p style="color: green;">正解です！</p>
+<% else %>
+  <p style="color: red;">不正解です。正しい答えは <%= @book.ndc1 %> です。</p>
+<% end %>
+
+<p>あなたの回答: <%= @user_answer %></p>
+<p>図書の詳細</p>
+<p>NDC <%= @book.ndc %></p>
+<p><%= @book.title %>（著者: <%= @book.author %>）</p>
+
+
+<% if session[:question_number] > 5 %>
+  <%= link_to "結果画面", result_games_path, class: "btn btn-primary" %>
+<% else %>
+  <%= link_to "次の問題へ", question_games_path, class: "btn btn-primary" %>
+<% end %>
