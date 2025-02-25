@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    # ここで各モデルの属性の人間らしい名前を指定できます。
+    attributes:
+      user:
+        name: ""
+        password: ""
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              taken: "ご入力のIDでは登録できませんでした。別のIDをお試しください。"
+            password:
+              too_short: "パスワードは%{count}文字以上で入力してください。"
