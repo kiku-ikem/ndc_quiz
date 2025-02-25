@@ -29,4 +29,8 @@ Rails.application.routes.draw do
 
   # お気に入り機能
   resources :favorites, only: [:create, :destroy]
+
+  # エラーページです。
+  match '/404', to: 'errors#not_found', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
 end
