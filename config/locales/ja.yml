@@ -1,6 +1,5 @@
 ja:
   activerecord:
-    # ここで各モデルの属性の人間らしい名前を指定できます。
     attributes:
       user:
         name: ""
@@ -10,6 +9,8 @@ ja:
         user:
           attributes:
             name:
+              blank: "IDを入力してください。"
               taken: "ご入力のIDでは登録できませんでした。別のIDをお試しください。"
             password:
+              blank: "パスワードを入力してください。"
               too_short: "パスワードは%{count}文字以上で入力してください。"
