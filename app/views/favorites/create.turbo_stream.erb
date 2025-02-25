@@ -1,0 +1,2 @@
+<%= turbo_stream.replace "favorite-#{params[:book_id]}", partial: "shared/favorite_icon", locals: { book: Book.find(params[:book_id]) } %>
+
