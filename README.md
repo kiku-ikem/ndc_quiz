@@ -68,3 +68,6 @@ Figma：https://www.figma.com/design/8sLRrEYv4OhuvmiFCmLamW/ndc-quiz?node-id=0-1
 ### ER図
 https://drive.google.com/file/d/1W_OLIMxQaCWgCCvWW-G-daKNdrdvDAY-/view?usp=sharing
 
+### 図書データの出典
+本アプリで使用している図書データは国立国会図書館のデータを使用しています。
+出典：[国立国会図書館サーチ](https://ndlsearch.ndl.go.jp)
